@@ -8,17 +8,20 @@ public class Hundir {
 
         j1.mundo.rellenar_tablero();
         j2.mundo.rellenar_tablero();
-        j1.colocar_barcos();
+        j1.mundo.visualizar();
+        j1.colocar_barcos_manual();
         j2.colocar_barcos();
         System.out.print(" Todos los barcos en posición...\n");
-        j2.mundo.visualizar();
-        j1.mundo.desvelar();
+        j2.mundo.desvelar();
+        j1.mundo.visualizar();
         System.out.println("   Preparados para realizar el disparo.");
         while (!j1.mundo.todos_hundido() && !j2.mundo.todos_hundido()){
             j1.disparar(j2.mundo, "humano");
             j2.disparar(j1.mundo, "maquina");
-            j2.mundo.visualizar();
-            j1.mundo.desvelar();
+            System.out.print(" Todos los barcos en posición...\n");
+            j2.mundo.desvelar();
+            j1.mundo.visualizar();
+            System.out.println("   Preparados para realizar el disparo.");
         }
 
         if(j1.mundo.todos_hundido()){

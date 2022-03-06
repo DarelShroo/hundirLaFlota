@@ -132,4 +132,5 @@ public class Comprueba {
         }
         return me_puedo_colocar;
     }
+
 }

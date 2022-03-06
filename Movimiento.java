@@ -1,9 +1,9 @@
 public class Movimiento {
-    Object[] posicionBarco(int opcion, Barco barco, String[][] miTableroVisible, int col, int fil) {
+    public Object[] posicion_barco(int opcion, Barco barco, String[][] miTableroVisible, int col, int fil) {
         Object[] arrayObjetos = new Object[3];
 
         switch (opcion) {
-            case 0 -> arrayObjetos = verticalAbajo(miTableroVisible, barco, col, fil);
+            case 0 -> arrayObjetos = vertical_abajo(miTableroVisible, barco, col, fil);
             case 1 -> arrayObjetos = vertical_arriba(miTableroVisible, barco, col, fil);
             case 2 -> arrayObjetos = horizontal_izquierda(miTableroVisible, barco, col, fil);
             case 3 -> arrayObjetos = horizontal_derecha(miTableroVisible, barco, col, fil);
@@ -16,10 +16,9 @@ public class Movimiento {
         return arrayObjetos;
     }
 
-    private Object[] verticalAbajo(String[][] miTableroVisible, Barco barco, int col, int fil) {
+    public Object[] vertical_abajo(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int[][] posiciones = new int[2][barco.getTamanio()];
         int i = 1;
 
@@ -41,7 +40,6 @@ public class Movimiento {
     public Object[] vertical_arriba(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
 
@@ -64,7 +62,6 @@ public class Movimiento {
     public Object[] horizontal_izquierda(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
 
@@ -87,7 +84,6 @@ public class Movimiento {
     public Object[] horizontal_derecha(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
 
         int[][] posiciones = new int[2][barco.getTamanio()];
@@ -110,7 +106,6 @@ public class Movimiento {
     public Object[] diagonal_arriba_izquierda(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
 
@@ -130,10 +125,9 @@ public class Movimiento {
         return getObjects(miTableroVisible, tableroTemporal, barco.getTamanio(), tamanio, posiciones);
     }
 
-    private Object[] diagonal_abajo_derecha(String[][] miTableroVisible, Barco barco, int col, int fil) {
+    public Object[] diagonal_abajo_derecha(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
         int x = 0;
@@ -154,10 +148,9 @@ public class Movimiento {
         return getObjects(miTableroVisible, tableroTemporal, barco.getTamanio(), tamanio, posiciones);
     }
 
-    private Object[] diagonal_arriba_derecha(String[][] miTableroVisible, Barco barco, int col, int fil) {
+    public Object[] diagonal_arriba_derecha(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
 
@@ -177,10 +170,9 @@ public class Movimiento {
         return getObjects(miTableroVisible, tableroTemporal, barco.getTamanio(), tamanio, posiciones);
     }
 
-    private Object[] diagonal_abajo_izquierda(String[][] miTableroVisible, Barco barco, int col, int fil) {
+    public Object[] diagonal_abajo_izquierda(String[][] miTableroVisible, Barco barco, int col, int fil) {
         int tamanio = 0;
         String[][] tableroTemporal = generar_tablero_temporal(miTableroVisible);
-        //Colocar horizontal izquierda
         int i = 1;
         int[][] posiciones = new int[2][barco.getTamanio()];
 
@@ -215,7 +207,7 @@ public class Movimiento {
         return arrayObjetos;
     }
 
-    private boolean compruebaAlrededor(int col, int fil, String[][] tableroTemporal, int tamanio, String direccion) {
+    public boolean compruebaAlrededor(int col, int fil, String[][] tableroTemporal, int tamanio, String direccion) {
         return Comprueba.compruebaIzquierda(col, fil, tableroTemporal, tamanio, direccion) &&
                 Comprueba.compruebaDerecha(col, fil, tableroTemporal, tamanio, direccion) &&
                 Comprueba.compruebaArriba(col, fil, tableroTemporal, tamanio, direccion) &&
@@ -226,7 +218,7 @@ public class Movimiento {
                 Comprueba.compruebaDiagonaAbajoIzquierda(col, fil, tableroTemporal, tamanio, direccion);
     }
 
-    private String[][] generar_tablero_temporal(String[][] tablero) {
+    public String[][] generar_tablero_temporal(String[][] tablero) {
         String[][] tableroTemporal = new String[10][10];
         for (int i = 0; i < tablero.length; i++) {
             System.arraycopy(tablero[i], 0, tableroTemporal[i], 0, tablero[0].length);

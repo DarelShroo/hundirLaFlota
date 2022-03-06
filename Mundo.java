@@ -7,12 +7,12 @@ public class Mundo {
 
     Movimiento movimiento = new Movimiento();
 
-    private Transatlantico[] transatlanticos = new Transatlantico[1];
+    private Transatlantico[] transatlantico = new Transatlantico[1];
     private Yate yates[] = new Yate[2];
     private Submarino submarinos[] = new Submarino[3];
 
     public Transatlantico[] getTransatlanticos() {
-        return transatlanticos;
+        return transatlantico;
     }
 
     public Yate[] getYates() {
@@ -23,54 +23,46 @@ public class Mundo {
         return submarinos;
     }
 
-    public boolean colocar_submarino(int x, int y, Submarino submarino) {
-        return isColocado(x, y, submarino, generaNumeroAleatorio());
-    }
-    public boolean colocar_transatlantico(int x, int y, Transatlantico transatlantico) {
-        return isColocado(x, y, transatlantico, generaNumeroAleatorio());
-    }
-    public boolean colocar_yate(int x, int y, Yate yate) {
-        return isColocado(x, y, yate, generaNumeroAleatorio());
-    }
-
     public boolean isColocado(int col, int fil, Barco barco, int opcion) {
-        Object[] arrayObjetos = movimiento.posicionBarco(opcion, barco, miTableroVisible, col, fil);
-        int tamanio = (int) arrayObjetos[1];
         boolean colocado = false;
-        if (tamanio == barco.getTamanio()) {
-            miTableroVisible = (String[][]) arrayObjetos[0];
-            barco.setPosiciones((int[][]) arrayObjetos[2]);
-            colocado = true;
-        }
-
+        try {
+            Object[] arrayObjetos = movimiento.posicion_barco(opcion, barco, miTableroVisible, col, fil);
+            int tamanio = (int) arrayObjetos[1];
+            if (tamanio == barco.getTamanio()) {
+                miTableroVisible = (String[][]) arrayObjetos[0];
+                barco.setPosiciones((int[][]) arrayObjetos[2]);
+                colocado = true;
+            }
+        } catch (NullPointerException ignored){}
         return colocado;
     }
 
     public boolean disparo(int x, int y) {
         boolean disparo = true;
+
         if (this.miTableroVisible[x][y].equals(" ")) {
             this.miTableroVisible[x][y] = "x";
             this.miTableroDisparos[x][y] = "x";
         }
         if ((!this.miTableroVisible[x][y].equals(" ") && !this.miTableroVisible[x][y].equals("x"))) {
-            this.miTableroDisparos[x][y] = this.miTableroVisible[x][y];
-            System.out.println("Tocado");
+            this.miTableroVisible[x][y] = "*";
+            this.miTableroDisparos[x][y] = "*";
 
             compruebaYate(x, y);
             compruebaSubmarino(x, y);
             compruebaTransatlantico(x, y);
         }
 
-
         return disparo;
     }
 
     public void compruebaTransatlantico(int x, int y) {
-        for (Transatlantico transatlantico : transatlanticos) {
+        for (Transatlantico transatlantico : transatlantico) {
             for (int i = 0; i <= transatlantico.getPosiciones().length; i++) {
-                if ((x + "" + y).equals(transatlantico.getPosiciones()[0][i] + ""+transatlantico.getPosiciones()[1][i]) && !transatlantico.getHundido()) {
-                    transatlantico.getPosiciones()[0][0] = -1;
-                    transatlantico.getPosiciones()[1][0] = -1;
+                if ((x + "" + y).equals(transatlantico.getPosiciones()[0][i] + "" + transatlantico.getPosiciones()[1][i]) && !transatlantico.getHundido()) {
+                    System.out.println("Tocado");
+                    transatlantico.getPosiciones()[0][i] = -1;
+                    transatlantico.getPosiciones()[1][i] = -1;
                     transatlantico.tocado();
                 }
             }
@@ -93,9 +85,10 @@ public class Mundo {
     public void compruebaYate(int x, int y) {
         for (Yate yate : yates) {
             for (int i = 0; i < yate.getPosiciones().length; i++) {
-                if ((x + "" + y).equals(yate.getPosiciones()[0][i] + ""+yate.getPosiciones()[1][i]) && !yate.getHundido()) {
-                    yate.getPosiciones()[0][0] = -1;
-                    yate.getPosiciones()[1][0] = -1;
+                if ((x + "" + y).equals(yate.getPosiciones()[0][i] + "" + yate.getPosiciones()[1][i]) && !yate.getHundido()) {
+                    System.out.println("Tocado");
+                    yate.getPosiciones()[0][i] = -1;
+                    yate.getPosiciones()[1][i] = -1;
                     yate.tocado();
                 }
             }
@@ -110,7 +103,8 @@ public class Mundo {
     public void compruebaSubmarino(int x, int y) {
         for (Submarino submarino : submarinos) {
             for (int i = 0; i < submarino.getPosiciones().length; i++) {
-                if ((x + "" + y).equals(submarino.getPosiciones()[0][0] + ""+submarino.getPosiciones()[1][0]) && !submarino.getHundido()) {
+                if ((x + "" + y).equals(submarino.getPosiciones()[0][0] + "" + submarino.getPosiciones()[1][0]) && !submarino.getHundido()) {
+                    System.out.println("Tocado");
                     submarino.getPosiciones()[0][0] = -1;
                     submarino.getPosiciones()[1][0] = -1;
                     submarino.tocado();
@@ -126,7 +120,7 @@ public class Mundo {
     }
 
 
-    public void visualizar() {
+    public void desvelar() {
         String letrasPos = "abcdefghij";
 
         System.out.println("  0123456789");
@@ -144,7 +138,7 @@ public class Mundo {
 
     }
 
-    public void desvelar() {
+    public void visualizar() {
         String letrasPos = "abcdefghij";
         System.out.print(" ------------\n");
         for (int i = 0; i < this.miTableroVisible.length; i++) {
@@ -167,7 +161,7 @@ public class Mundo {
         }
     }
 
-    public int generaNumeroAleatorio() {
-        return (int) Math.floor(Math.random() * (7 + 1) + (0));
+    public String[][] getTablero() {
+        return miTableroVisible;
     }
 }
